@@ -1,11 +1,19 @@
 FROM openjdk:11
 
+ARG BUILD_FROM
+ARG LOCAL_PATH
+ARG REMOTE_URL
+ARG BRANCH
+ARG id_rsa
+ARG id_rsa_pub
+
 WORKDIR project/
 
 # Install Build Essentials
 RUN apt-get update \
     && apt-get install build-essential -y \
-    && apt-get install -y libc6-amd64-cross libstdc++6-amd64-cross libgcc1-amd64-cross
+    && apt-get install -y libc6-amd64-cross libstdc++6-amd64-cross libgcc1-amd64-cross \
+    && apt-get install -y git libssl-dev
 
 RUN ln -s /usr/x86_64-linux-gnu/lib64/ /lib64
 
@@ -57,5 +65,27 @@ RUN yes | sdkmanager --update --channel=0
 RUN yes | sdkmanager \
     "platforms;android-33" \
     "build-tools;33.0.1"
+
+# Add codebase to working directory
+#COPY $LOCAL_PATH /project/codebase
+
+# Authorize SSH Host
+RUN mkdir -p /root/.ssh && \
+    chmod 0700 /root/.ssh && \
+    ssh-keyscan github.com > /root/.ssh/known_hosts
+
+RUN mkdir ssh
+ADD $id_rsa /project/ssh
+ADD $id_rsa_pub /project/ssh
+
+# Add the keys and set permissions
+RUN cat $id_rsa > /root/.ssh/id_rsa && \
+    cat $id_rsa_pub > /root/.ssh/id_rsa.pub && \
+    chmod 600 /root/.ssh/id_rsa && \
+    chmod 600 /root/.ssh/id_rsa.pub
+
+RUN git clone -b $BRANCH $REMOTE_URL codebase
+
+RUN rm $id_rsa && rm $id_rsa_pub
 
 CMD ["/bin/bash"]
