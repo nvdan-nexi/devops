@@ -8,3 +8,4 @@ Steps
 4. Run command 
    - docker exec -i -t pia-container /bin/bash -c "cd codebase && ./gradlew assembleRelease"
    - docker exec -i -t pia-container /bin/bash -c "cd codebase && ./gradlew clean"
+5. docker cp pia-container:/project/codebase/output /

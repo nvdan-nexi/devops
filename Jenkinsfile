@@ -37,8 +37,22 @@ pipeline {
                         case "Debug": sh "./execute.sh command assembleDebug"; break
                         case "Release": sh "./execute.sh command assembleRelease"; break
                     }
+                    sh "./execute.sh publish";
                 }
             }
+        }
+        stage('Cleanup') {
+            steps {
+                script {
+                    echo 'Removing used resources'
+                    sh "./execute.sh remove";
+                }
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'output/*.apk', onlyIfSuccessful: true
         }
     }
 }
