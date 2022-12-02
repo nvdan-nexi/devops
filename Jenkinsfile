@@ -1,5 +1,5 @@
 pipeline {
-    agent { dockerfile true }
+    agent any
 
     parameters {
         choice(
@@ -10,16 +10,23 @@ pipeline {
     }
 
     stages {
+        stage('Build Environment') {
+            steps {
+                echo 'Build android environment using docker'
+                sh "./execute.sh build"
+                sh "./execute.sh run"
+            }
+        }
         stage('Pre-setup') {
             steps {
                 echo 'Cleaning cache and build'
-                sh "./gradlew clean"
+                sh "./execute.sh command clean"
             }
         }
         stage('Run Tests') {
             steps {
                 echo 'Running Tests'
-                sh "./gradlew test"
+                sh "./execute.sh command test"
             }
         }
         stage('Build Source Code') {
@@ -27,8 +34,8 @@ pipeline {
                 echo 'Build Source Code as '+ params.BUILD
                 script {
                     switch(params.BUILD) {
-                        case "Debug": sh "./gradlew assembleDebug"; break
-                        case "Release": sh "./gradlew assembleRelease"; break
+                        case "Debug": sh "./execute.sh command assembleDebug"; break
+                        case "Release": sh "./execute.sh command assembleRelease"; break
                     }
                 }
             }

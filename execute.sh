@@ -19,7 +19,7 @@ case "$DOCKER_OPERATION" in
    ;;
    "command") {
      echo "./gradlew $GRADLE_COMMAND"
-     docker exec -i -t pia-container /bin/bash -c "cd codebase && ./gradlew $GRADLE_COMMAND"
+     docker exec pia-container /bin/bash -c "cd codebase && ./gradlew $GRADLE_COMMAND"
    }
    ;;
 esac
