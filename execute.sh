@@ -22,7 +22,7 @@ case "$DOCKER_OPERATION" in
      docker exec pia-container /bin/bash -c "cd codebase && ./gradlew $GRADLE_COMMAND"
    }
    ;;
-   "publish") {
+   "extract") {
      rm -rf output
      docker cp pia-container:/project/codebase/output .
    }
@@ -35,3 +35,4 @@ esac
 # ./execute.sh run
 # ./execute.sh command clean
 # ./execute.sh command assembleRelease
+# ./execute.sh extract

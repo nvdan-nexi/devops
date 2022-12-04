@@ -37,22 +37,28 @@ pipeline {
                         case "Debug": sh "./execute.sh command assembleDebug"; break
                         case "Release": sh "./execute.sh command assembleRelease"; break
                     }
-                    sh "./execute.sh publish";
+                    sh "./execute.sh extract";
                 }
             }
         }
-        stage('Cleanup') {
-            steps {
-                script {
-                    echo 'Removing used resources'
-                    sh "./execute.sh remove";
-                }
+        stage('Distribution') {
+            when {  expression { params.BUILD == 'Release' } }
+            parallel {
+              stage("Nexus") { steps { script { echo "Upload to Nexus" } } }
+              stage("Maven") { steps { script { echo "Upload to Maven" } } }
+              stage("Nuget") { steps { script { echo "Upload to Nuget" } } }
+              stage("Node Package Manager") { steps { script { echo "Upload to Node Package Manager" } } }
             }
         }
     }
     post {
         always {
             archiveArtifacts artifacts: 'output/*.apk', onlyIfSuccessful: true
+
+            script {
+                echo 'Removing used resources'
+                sh "./execute.sh remove";
+            }
         }
     }
 }
