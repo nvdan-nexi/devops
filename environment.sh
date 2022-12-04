@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export DOCKERFILE=android.dockerfile
 export BUILD_FROM=local
 export LOCAL_PATH=hello-world
 export REMOTE_URL=git@github.com:nvdan-nexi/hello-world.git
