@@ -8,6 +8,5 @@ steps:
 - script: |
     echo "Build Environment"
     chmod +x environment.sh && source environment.sh && ./environment.sh
-    echo $DOCKERFILE
-    #./execute.sh build
+    ./execute.sh build
   displayName: 'Build Environment'
