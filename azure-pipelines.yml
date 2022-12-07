@@ -4,9 +4,6 @@ pool:
 trigger:
 - azure-setup
 
-pool:
-  vmImage: ubuntu-latest
-
 steps:
 - script: | 
     echo Hello, world!
