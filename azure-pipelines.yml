@@ -1,5 +1,5 @@
 pool:
-  name: local
+  vmImage: ubuntu-latest
 
 trigger:
 - azure-setup
