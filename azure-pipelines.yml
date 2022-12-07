@@ -10,5 +10,5 @@ steps:
     ls
     chmod +x execute.sh
     source execute.sh
-    sh "./execute.sh build"
+    ./execute.sh build
   displayName: 'Build Environment'
