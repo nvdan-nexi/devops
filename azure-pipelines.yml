@@ -8,4 +8,30 @@ steps:
 - script: |
     echo "Build Environment"
     ./execute.sh build
+    ./execute.sh run
   displayName: 'Build Environment'
+
+- script: |
+    echo "Cleaning cache and build"
+    ./execute.sh command clean
+  displayName: 'Pre-setup'
+
+- script: |
+    echo "Running Tests"
+    ./execute.sh command test
+  displayName: 'Run Tests'
+
+
+- script: |
+    echo "Build Source Code as Release"
+    ./execute.sh command assembleRelease
+  displayName: 'Build Source Code'
+
+
+- script: |
+    echo "Removing used resources"
+    ./execute.sh remove
+  displayName: 'Cleanup'
+
+
+
