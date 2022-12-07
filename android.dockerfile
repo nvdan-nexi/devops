@@ -8,7 +8,9 @@ ARG id_rsa
 ARG id_rsa_pub
 
 RUN echo "Inside Dockerfile"
-RUN echo $id_rsa
+
+ENV id_rsaa=$id_rsa
+RUN echo $id_rsaa
 
 WORKDIR project/
 
@@ -78,7 +80,7 @@ RUN mkdir -p /root/.ssh && \
     ssh-keyscan github.com > /root/.ssh/known_hosts
 
 RUN mkdir ssh
-ADD $id_rsa /project/ssh
+ADD $id_rsaa /project/ssh
 ADD $id_rsa_pub /project/ssh
 
 # Add the keys and set permissions
