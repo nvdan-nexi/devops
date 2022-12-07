@@ -5,10 +5,7 @@ trigger:
 - azure-setup
 
 steps:
-- script: | 
-    echo Hello, world!
-    ls
-    chmod +x execute.sh
-    source execute.sh
+- script: |
+    ./environment.sh
     ./execute.sh build
   displayName: 'Build Environment'
