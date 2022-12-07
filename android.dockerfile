@@ -7,6 +7,9 @@ ARG BRANCH
 ARG id_rsa
 ARG id_rsa_pub
 
+RUN echo "Inside Dockerfile"
+RUN echo $id_rsa
+
 WORKDIR project/
 
 # Install Build Essentials
