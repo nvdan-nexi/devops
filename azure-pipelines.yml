@@ -1,3 +1,6 @@
+pool:
+  name: local
+
 trigger:
 - azure-setup
 
