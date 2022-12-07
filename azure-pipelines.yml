@@ -7,5 +7,6 @@ trigger:
 steps:
 - script: |
     ./environment.sh
-    ./execute.sh build
+    echo $DOCKERFILE
+    
   displayName: 'Build Environment'
