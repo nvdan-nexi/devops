@@ -45,3 +45,9 @@ steps:
     Contents: '**/*.apk'
     TargetFolder: '$(build.artifactstagingdirectory)'
   displayName: 'Copy File to : $(build.artifactstagingdirectory)'
+
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+  displayName: 'Publish to Artifact'
