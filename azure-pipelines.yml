@@ -29,9 +29,19 @@ steps:
 
 
 - script: |
+    echo "Extract Build"
+    ./execute.sh extract
+  displayName: 'Extract Build'
+
+
+- script: |
     echo "Removing used resources"
     ./execute.sh remove
   displayName: 'Cleanup'
 
-
-
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(system.defaultworkingdirectory)'
+    Contents: '**/*.apk'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+  displayName: 'Copy File to : $(build.artifactstagingdirectory)'
